@@ -53,14 +53,6 @@ impl File {
     }
 }
 
-// pub fn run(files: FileNames) -> Result<(), Box<dyn Error>> {
-//     let contents =  fs::read_to_string(files.file1)?;
-
-//     println!("With Text:\n{}", contents);
-
-//     Ok(())
-// }
-
 pub struct LCSGrid {
     pub grid: Vec<Vec<usize>>,
 }
@@ -72,15 +64,14 @@ impl LCSGrid {
         LCSGrid { grid }
     }
 
-    pub fn construct_grid(&mut self, lines_a: &mut Vec<String>, lines_b: &mut Vec<String>) {
+    pub fn construct_grid(&mut self, lines_a: &mut [String], lines_b: &mut [String]) {
         for (i, line_a) in lines_a.iter_mut().enumerate() {
             for (j, line_b) in lines_b.iter_mut().enumerate() {
                 if *line_a == *line_b {
                     // println!("Iguales encontradas {} == {}", *line_a , *line_b );
                     self.grid[j + 1][i + 1] = self.grid[j][i] + 1;
                 } else {
-                    self.grid[j + 1][i + 1] =
-                        cmp::max(self.grid[j + 1][i], self.grid[j][i + 1]);
+                    self.grid[j + 1][i + 1] = cmp::max(self.grid[j + 1][i], self.grid[j][i + 1]);
                 }
             }
         }
@@ -92,41 +83,7 @@ pub fn run(files: FileNames) -> Result<(), Box<dyn Error>> {
     let mut file_a = File::new(files.file1)?;
     let mut file_b = File::new(files.file2)?;
 
-    // println!("With Text:\n{:?}", file_a.contents);
-    // println!("With Text:\n{:?}", file_b.contents);
-
     let mut lcs_grid = LCSGrid::new(file_a.len_lines, file_b.len_lines);
-    // for (x, row) in lcs_grid.grid.iter_mut().enumerate() {
-    // for (y, col) in row.iter_mut().enumerate() {
-
-    // for (x, row) in lcs_grid.grid.iter_mut().enumerate() {
-    //     for (y, col) in row.iter_mut().enumerate() {
-    //         // println!("index: {x}, {y}, value{col}", x=x,y=y,col=col);
-    //         // println!("Strings: {}, {}", file_a.contents[x], file_b.contents[y])
-    //         // # le tengo que restar uno al indice de la string
-    //         if file_a.contents[x] == file_b.contents[y] {
-    //             println!("Iguales encontradas {} == {}", file_a.contents[x], file_b.contents[y]);
-    //             // println!("{:?}", lcs_grid.grid[0][0]);
-    //             *col = *col + 1;
-    //         } else {
-    //             // lcs_grid.grid[x+1][y+1] = cmp::max(lcs_grid.grid[x+1][y], lcs_grid.grid[x][y+1]);
-    //             // cmp::max(lcs_grid.grid[x+1][y], lcs_grid.grid[x][y+1]);
-    //         }
-    //     }
-    // }
-
-    // for (i, line_a) in file_a.contents.iter_mut().enumerate() {
-    //     for (j, line_b) in file_b.contents.iter_mut().enumerate() {
-    //         if *line_a == *line_b {
-    //             // println!("Iguales encontradas {} == {}", *line_a , *line_b );
-    //             lcs_grid.grid[j + 1][i + 1] = lcs_grid.grid[j][i] + 1;
-    //         } else {
-    //             lcs_grid.grid[j + 1][i + 1] =
-    //                 cmp::max(lcs_grid.grid[j + 1][i], lcs_grid.grid[j][i + 1]);
-    //         }
-    //     }
-    // }
-    // println!("Matrix:\n{:?}", lcs_grid.grid);
 
     lcs_grid.construct_grid(&mut file_a.contents, &mut file_b.contents);
     print_diff(
