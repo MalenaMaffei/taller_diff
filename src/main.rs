@@ -21,7 +21,7 @@ fn main() {
         process::exit(1);
     }
 }
-
+/// runs main logic of diff program
 pub fn run(filename_a: String, filename_b: String) -> Result<(), Box<dyn Error>> {
     let mut file_a = file::File::new(filename_a)?;
     let mut file_b = file::File::new(filename_b)?;

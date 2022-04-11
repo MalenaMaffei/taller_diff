@@ -6,11 +6,12 @@ pub struct LCSGrid {
 }
 
 impl LCSGrid {
+    /// creates new grid given two file lengths
     pub fn new(file_a_len: usize, file_b_len: usize) -> LCSGrid {
         let grid = vec![vec![0; file_a_len + 1]; file_b_len + 1];
         LCSGrid { grid }
     }
-
+    /// constructs the grid comparing the lines provided following LCS algorithm
     pub fn construct_grid(&mut self, lines_a: &mut [String], lines_b: &mut [String]) {
         for (i, line_a) in lines_a.iter_mut().enumerate() {
             for (j, line_b) in lines_b.iter_mut().enumerate() {
@@ -22,7 +23,7 @@ impl LCSGrid {
             }
         }
     }
-
+    /// prints diff result given the file lines and the constructed grid
     pub fn print_diff(&self, lines_a: &Vec<String>, lines_b: &Vec<String>, i: usize, j: usize) {
         if i > 0 && j > 0 && lines_a[i - 1] == lines_b[j - 1] {
             self.print_diff(lines_a, lines_b, i - 1, j - 1);
