@@ -30,7 +30,6 @@ pub fn file_to_vec(filename: impl AsRef<Path>) -> io::Result<Vec<String>> {
         .collect()
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -51,5 +50,4 @@ mod tests {
     fn file_not_found() {
         File::new("not_exists.txt".to_string()).expect("Test File not found");
     }
-
 }

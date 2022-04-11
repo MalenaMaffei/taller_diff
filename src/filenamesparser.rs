@@ -24,20 +24,28 @@ mod tests {
 
     #[test]
     fn first_filename_correct() {
-        let filenames = FileNamesParser::new(&["0".to_string(), "a".to_string(), "b".to_string()]).expect("not enough args");
-        println!("{}",filenames.file_a);
+        let filenames = FileNamesParser::new(&["0".to_string(), "a".to_string(), "b".to_string()])
+            .expect("not enough args");
+        println!("{}", filenames.file_a);
         assert_eq!(filenames.file_a, "a".to_string());
     }
 
     #[test]
     fn second_filename_correct() {
-        let filenames = FileNamesParser::new(&["0".to_string(), "a".to_string(), "b".to_string()]).expect("not enough args");
+        let filenames = FileNamesParser::new(&["0".to_string(), "a".to_string(), "b".to_string()])
+            .expect("not enough args");
         assert_eq!(filenames.file_b, "b".to_string());
     }
 
     #[test]
     fn ignores_other_args() {
-        let filenames = FileNamesParser::new(&["0".to_string(), "a".to_string(), "b".to_string(), "ignore".to_string()]).expect("not enough args");
+        let filenames = FileNamesParser::new(&[
+            "0".to_string(),
+            "a".to_string(),
+            "b".to_string(),
+            "ignore".to_string(),
+        ])
+        .expect("not enough args");
         assert_eq!(filenames.file_b, "b".to_string());
     }
 
