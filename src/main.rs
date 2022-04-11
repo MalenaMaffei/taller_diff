@@ -6,15 +6,15 @@ mod filenamesparser;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let files = filenamesparser::FileNamesParser::new(&args).unwrap_or_else(|err| {
+    let file_names = filenamesparser::FileNamesParser::new(&args).unwrap_or_else(|err| {
         println!("Encountered a problem parsing arguments: {}", err);
         process::exit(1);
     });
 
-    println!("Generating diff for {}", files.file1);
-    println!("Against {}", files.file2);
+    println!("Generating diff for {}", file_names.file_a);
+    println!("Against {}", file_names.file_b);
 
-    if let Err(e) = taller_diff::run(files.file1, files.file2) {
+    if let Err(e) = taller_diff::run(file_names.file_a, file_names.file_b) {
         println!("Application error: {}", e);
         process::exit(1);
     }
