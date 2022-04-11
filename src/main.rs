@@ -29,8 +29,7 @@ pub fn run(filename_a: String, filename_b: String) -> Result<(), Box<dyn Error>>
     let mut lcs_grid = grid::LCSGrid::new(file_a.len_lines, file_b.len_lines);
 
     lcs_grid.construct_grid(&mut file_a.contents, &mut file_b.contents);
-    taller_diff::print_diff(
-        &lcs_grid.grid,
+    lcs_grid.print_diff(
         &file_a.contents,
         &file_b.contents,
         file_a.contents.len(),
